@@ -5,10 +5,11 @@ using System.Text;
 
 namespace Forum_DAL.Entities
 {
-    public class Message: BaseEntity
+    public class Message
     {
+        [Key]
+        public int Id { get; set; }
         public int TopicId { get; set; }
-        
         [Required]
         public string Title { get; set; }
         [Required]

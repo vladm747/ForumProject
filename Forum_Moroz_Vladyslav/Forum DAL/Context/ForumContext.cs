@@ -8,9 +8,14 @@ namespace Forum_DAL.Context
 {
     public class ForumContext: DbContext
     {
+
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public ForumContext(DbContextOptions<ForumContext> options)
             : base(options)
         {
+            /*Database.EnsureDeleted();*/
+
             Database.EnsureCreated();
         }
         public ForumContext()
@@ -23,7 +28,5 @@ namespace Forum_DAL.Context
             optionsBuilder.UseSqlServer("Server=.;Database=ForumDB;Trusted_Connection=True;");
         }
 
-        public DbSet<Message> Messages;
-        public DbSet<Topic> Topics;
     }
 }

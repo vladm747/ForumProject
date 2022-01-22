@@ -7,7 +7,7 @@ using Forum_DAL.Entities;
 
 namespace Forum_DAL.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(int id);
         Task AddAsync(TEntity entity);
