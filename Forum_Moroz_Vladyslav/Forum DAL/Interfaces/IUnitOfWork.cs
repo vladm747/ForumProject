@@ -7,8 +7,8 @@ namespace Forum_DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IMessageRepository MessageRepository { get; }
-        ITopicRepository TopicRepository { get; }
+        IMessageRepository Messages{ get; }
+        ITopicRepository Topics { get; }
         Task<int> SaveAsync();
     }
 }

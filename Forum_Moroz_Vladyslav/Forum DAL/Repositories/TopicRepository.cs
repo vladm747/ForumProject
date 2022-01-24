@@ -18,7 +18,7 @@ namespace Forum_DAL.Repositories
         {
             _topicContext = topicContext;
         }
-        public async Task AddAsync(Topic entity)
+        public async Task CreateAsync(Topic entity)
         {
             await _topicContext.AddAsync(entity);
             await _topicContext.SaveChangesAsync();

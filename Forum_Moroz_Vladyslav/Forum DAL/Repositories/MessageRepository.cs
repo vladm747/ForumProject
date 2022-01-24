@@ -19,7 +19,7 @@ namespace Forum_DAL.Repositories
             _messageContext = messageContext;
         }
 
-        public async Task AddAsync(Message entity)
+        public async Task CreateAsync(Message entity)
         {
             await _messageContext.Messages.AddAsync(entity);
             await _messageContext.SaveChangesAsync();
@@ -46,9 +46,9 @@ namespace Forum_DAL.Repositories
             await _messageContext.SaveChangesAsync();
         }
 
-        public IQueryable<Message> GetAllByTopicId(int topicId)
+        public IQueryable<Message> GetAll()
         {
-           return _messageContext.Messages.Where(x => x.TopicId == topicId);
+            return _messageContext.Messages;//include hz
         }
 
         public async Task<Message> GetByIdAsync(int id)

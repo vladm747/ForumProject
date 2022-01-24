@@ -9,7 +9,7 @@ namespace ForumBLL.Interfaces
 {
     public interface ITopicService
     {
-        Task AddTopic(Topic topic);
+        Task CreateTopicAsync(Topic topic);
         IQueryable<Topic> GetAllTopicsAsync();
         Task<Topic> GetTopicByIdAsync(int id);
         Task DeleteTopicAsync(Topic topic);
