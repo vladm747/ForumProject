@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Forum_DAL.Entities;
+using ForumBLL.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,36 +12,56 @@ namespace Forum.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
+        private readonly IMessageService _messageService;
+
+        public MessageController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
         // GET: api/<MessageController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get(int topicId)
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_messageService.GetMessageListByTopicIdAsync(topicId));
         }
 
         // GET api/<MessageController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetMessage(int id)
         {
-            return "value";
+            return Ok(await _messageService.GetMessageByIdAsync(id));
         }
 
         // POST api/<MessageController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> CreateMessage([FromBody] Message message)
         {
+            await _messageService.AddMessageAsync(message);
+            return Ok(message);
         }
 
         // PUT api/<MessageController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IActionResult> UpdateMessage( [FromBody] Message message)
         {
+            await _messageService.UpdateMessageAsync(message);
+            return Ok();
         }
 
         // DELETE api/<MessageController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteMessageById(int id)
         {
+            await _messageService.DeleteMessageByIdAsync(id);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteMessage(Message message)
+        {
+            await _messageService.DeleteMessageAsync(message);
+            return Ok();
         }
     }
 }

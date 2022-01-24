@@ -48,7 +48,7 @@ namespace ForumBLL.Services
             await _database.SaveAsync();
         }
 
-        public async Task DeleteMessageById(int id)
+        public async Task DeleteMessageByIdAsync(int id)
         {
             var element = await _database.Messages.GetByIdAsync(id);
 

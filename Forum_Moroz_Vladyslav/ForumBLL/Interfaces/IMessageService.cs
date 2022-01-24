@@ -14,6 +14,6 @@ namespace ForumBLL.Interfaces
         Task DeleteMessageAsync(Message message);
         Task UpdateMessageAsync(Message message);
         Task<Message> GetMessageByIdAsync(int id);
-        Task DeleteMessageById(int id);
+        Task DeleteMessageByIdAsync(int id);
     }
 }
