@@ -9,7 +9,7 @@ namespace Forum_DAL.Interfaces
 {
     public interface IMessageRepository: IRepository<Message>
     {
-        IQueryable<Message> GetAll();
+        IEnumerable<Message> GetAll();
         Task UpdateAsync(Message entity);
     }
 }

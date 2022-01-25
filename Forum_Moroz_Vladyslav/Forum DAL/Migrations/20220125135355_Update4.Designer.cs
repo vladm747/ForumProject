@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumDAL.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20220122205101_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220125135355_Update4")]
+    partial class Update4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,14 +32,14 @@ namespace ForumDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreationDateTime")
+                    b.Property<DateTime?>("CreationDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TopicId")
+                    b.Property<int?>("TopicId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -56,7 +56,7 @@ namespace ForumDAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -70,11 +70,9 @@ namespace ForumDAL.Migrations
 
             modelBuilder.Entity("Forum_DAL.Entities.Message", b =>
                 {
-                    b.HasOne("Forum_DAL.Entities.Topic", "Topic")
+                    b.HasOne("Forum_DAL.Entities.Topic", null)
                         .WithMany("Messages")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TopicId");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,6 @@ namespace Forum_DAL.Interfaces
     {
         IMessageRepository Messages{ get; }
         ITopicRepository Topics { get; }
-        Task<int> SaveAsync();
+        Task SaveAsync();
     }
 }

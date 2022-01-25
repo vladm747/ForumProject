@@ -37,7 +37,7 @@ namespace ForumBLL.Services
             await _database.SaveAsync();    
         }
 
-        public IQueryable<Topic> GetAllTopicsAsync()
+        public IEnumerable<Topic> GetAllTopicsAsync()
         {
             return _database.Topics.GetAllTopics();
         }

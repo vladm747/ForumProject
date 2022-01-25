@@ -2,6 +2,8 @@ using Forum_DAL.Context;
 using Forum_DAL.Interfaces;
 using Forum_DAL.Repositories;
 using Forum_DAL.UoW;
+using ForumBLL.Interfaces;
+using ForumBLL.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +38,8 @@ namespace Forum
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddControllers();
             services.AddSwaggerGen();

@@ -1,5 +1,6 @@
 ﻿using Forum_DAL.Context;
 using Forum_DAL.Interfaces;
+using Forum_DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,13 +12,14 @@ namespace Forum_DAL.UoW
     {
         private readonly ForumContext _db = new ForumContext();
 
-        private IMessageRepository _messageRepository;
-        private ITopicRepository _topicRepository;
+        private MessageRepository _messageRepository;
+        private TopicRepository _topicRepository;
 
         public IMessageRepository Messages { 
             get 
             {
-                if (_messageRepository == null) { throw new NullReferenceException("UoW null reference from messageRepository"); }
+                if (_messageRepository == null)
+                    _messageRepository = new MessageRepository(_db); 
                 return _messageRepository;
             } 
         }
@@ -25,7 +27,8 @@ namespace Forum_DAL.UoW
         {
             get
             {
-                if (_topicRepository == null) { throw new NullReferenceException("UoW null reference from topicRepository"); }
+                if (_topicRepository == null) 
+                    _topicRepository = new TopicRepository(_db);
                 return _topicRepository;
             }
         }
@@ -33,9 +36,9 @@ namespace Forum_DAL.UoW
         {
             return _db.SaveChanges();
         }
-        public async Task<int> SaveAsync()
+        public async Task SaveAsync()
         {
-            return await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 }

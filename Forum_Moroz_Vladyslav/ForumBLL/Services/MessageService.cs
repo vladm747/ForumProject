@@ -81,9 +81,9 @@ namespace ForumBLL.Services
             await _database.SaveAsync();    
         }
 
-        public IQueryable<Message> GetMessageListByTopicIdAsync(int topicId)
+        public IEnumerable<Message> GetMessageListByTopicIdAsync(int topicId)
         {
-            return _database.Messages.GetAll().Where(x=>x.TopicId==topicId);
+            return _database.Messages.GetAll().Where(x => x.TopicId == topicId);
         }
     }
 }

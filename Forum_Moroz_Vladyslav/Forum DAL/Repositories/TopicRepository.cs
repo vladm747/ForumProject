@@ -44,9 +44,9 @@ namespace Forum_DAL.Repositories
             await _topicContext.SaveChangesAsync(); 
         }
 
-        public IQueryable<Topic> GetAllTopics()
+        public IEnumerable<Topic> GetAllTopics()
         {
-            return _topicContext.Topics;
+            return _topicContext.Topics.ToList();
         }
 
         public async Task<Topic> GetByIdAsync(int id)

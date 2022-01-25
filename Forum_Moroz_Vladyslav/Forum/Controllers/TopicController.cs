@@ -18,6 +18,7 @@ namespace Forum.Controllers
         }
         // GET: api/<TopicController>
         [HttpGet]
+        [Route("getAllTopics")]
         public IActionResult GetTopics()
         {
             return Ok(_topicService.GetAllTopicsAsync());
@@ -32,11 +33,11 @@ namespace Forum.Controllers
         }
 
         // POST api/<TopicController>
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTopic([FromBody] Topic topic)
         {
             await _topicService.CreateTopicAsync(topic);
-            return Ok();
+            return Created("/topic/" + topic.Id, topic);
         }
 
         // DELETE api/<TopicController>/5

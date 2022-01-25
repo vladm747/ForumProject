@@ -9,7 +9,7 @@ namespace ForumBLL.Interfaces
 {
     public interface IMessageService
     {
-        IQueryable<Message> GetMessageListByTopicIdAsync(int topicId);
+        IEnumerable<Message> GetMessageListByTopicIdAsync(int topicId);
         Task AddMessageAsync(Message message);
         Task DeleteMessageAsync(Message message);
         Task UpdateMessageAsync(Message message);

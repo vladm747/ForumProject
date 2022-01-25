@@ -20,7 +20,7 @@ namespace Forum.Controllers
         }
         // GET: api/<MessageController>
         [HttpGet]
-        public IActionResult Get(int topicId)
+        public IActionResult Get([FromQuery] int topicId)
         {
             return Ok(_messageService.GetMessageListByTopicIdAsync(topicId));
         }

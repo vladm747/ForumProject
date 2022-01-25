@@ -46,9 +46,9 @@ namespace Forum_DAL.Repositories
             await _messageContext.SaveChangesAsync();
         }
 
-        public IQueryable<Message> GetAll()
+        public IEnumerable<Message> GetAll()
         {
-            return _messageContext.Messages;//include hz
+            return _messageContext.Messages.ToList();//include hz
         }
 
         public async Task<Message> GetByIdAsync(int id)
