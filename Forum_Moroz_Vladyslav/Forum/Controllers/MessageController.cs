@@ -1,4 +1,5 @@
-﻿using Forum_DAL.Entities;
+﻿using Forum.Filters;
+using Forum_DAL.Entities;
 using ForumBLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Forum.Controllers
 {
+    [ForumExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class MessageController : ControllerBase
