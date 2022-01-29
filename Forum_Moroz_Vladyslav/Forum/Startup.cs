@@ -4,6 +4,7 @@ using Forum_DAL.Repositories;
 using Forum_DAL.UoW;
 using ForumBLL.Interfaces;
 using ForumBLL.Services;
+using ForumDAL.Entities.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

@@ -1,4 +1,7 @@
 ﻿using Forum_DAL.Entities;
+using ForumDAL.Entities.Auth;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +9,7 @@ using System.Text;
 
 namespace Forum_DAL.Context
 {
-    public class ForumContext: DbContext
+    public class ForumContext: IdentityDbContext<User>
     {
 
         public DbSet<Message> Messages { get; set; }
@@ -24,6 +27,18 @@ namespace Forum_DAL.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityRole>().HasData(new[]
+            {
+                 new IdentityRole("user")
+                {
+                    NormalizedName = "USER"
+                },
+                new IdentityRole("admin")
+                {
+                    NormalizedName = "ADMIN"
+                }
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
