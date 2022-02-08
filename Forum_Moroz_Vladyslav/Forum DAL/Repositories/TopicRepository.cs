@@ -46,7 +46,7 @@ namespace Forum_DAL.Repositories
 
         public IEnumerable<Topic> GetAllTopics()
         {
-            return _topicContext.Topics.ToList();
+            return _topicContext.Topics.Include(x => x.Messages).ToList();
         }
 
         public async Task<Topic> GetByIdAsync(int id)
