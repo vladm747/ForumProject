@@ -1,8 +1,10 @@
-﻿using ForumBLL.DTO;
+﻿using Forum.Helpers;
+using ForumBLL.DTO;
 using ForumBLL.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Forum.Controllers
 {
@@ -12,12 +14,16 @@ namespace Forum.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly JwtSettings _jwtSettings;
 
-
-        public AccountController(IUserService userService, IRoleService roleService)
+        public AccountController(
+            IUserService userService, 
+            IRoleService roleService, 
+            IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _userService = userService;
             _roleService = roleService;
+            _jwtSettings = jwtSettings.Value;
         }
 
         [HttpPost("register")]
@@ -47,7 +53,7 @@ namespace Forum.Controllers
 
             var roles = await _roleService.GetRoles(user);
 
-            return Ok();
+            return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
         }
 
     }

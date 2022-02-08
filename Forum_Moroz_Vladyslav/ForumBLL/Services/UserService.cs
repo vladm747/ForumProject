@@ -28,12 +28,13 @@ namespace ForumBLL.Services
             {
                 LastName = user.LastName,
                 FirstName = user.FirstName,
+                UserName = user.Email,
                 Email = user.Email,
             }, user.Password);
 
             if (!result.Succeeded)
             {
-                throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
+                throw new Exception(string.Join(';', result.Errors.Select(x => x.Description)));
             }
         }
 

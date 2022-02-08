@@ -1,8 +1,10 @@
-﻿using Forum_DAL.UoW;
+﻿using Forum.Helpers;
+using Forum_DAL.UoW;
 using ForumBLL.DTO;
 using ForumBLL.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace Forum.Controllers
@@ -13,11 +15,16 @@ namespace Forum.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly JwtSettings _jwtSettings;
 
-        public UserRoleController(IUserService userService, IRoleService roleService)
+        public UserRoleController(
+            IUserService userService,
+            IRoleService roleService,
+            IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _userService = userService;
             _roleService = roleService;
+            _jwtSettings = jwtSettings.Value;
         }
 
         [HttpPost("createRole")]
