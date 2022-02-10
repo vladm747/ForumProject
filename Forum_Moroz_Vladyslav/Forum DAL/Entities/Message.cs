@@ -11,8 +11,10 @@ namespace Forum_DAL.Entities
         [Key]
         public int Id { get; set; }
         [Required]
+        [StringLength(40)]
         public string Title { get; set; }
         [Required]
+        [StringLength(300)]
         public string Content { get; set; }
         public DateTime? CreationDateTime { get; set; }
         public int? TopicId { get; set; }

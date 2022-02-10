@@ -1,6 +1,7 @@
 ﻿using Forum.Filters;
 using Forum_DAL.Entities;
 using ForumBLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Forum.Controllers
     [ForumExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TopicController : ControllerBase
     {
         private readonly ITopicService _topicService;
@@ -45,6 +47,7 @@ namespace Forum.Controllers
         // DELETE api/<TopicController>/5
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteTopicById(int id)
         {
             await _topicService.DeleteTopicByIdAsync(id);

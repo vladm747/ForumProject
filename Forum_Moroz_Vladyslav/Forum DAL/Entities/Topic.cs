@@ -10,6 +10,7 @@ namespace Forum_DAL.Entities
         [Key]
         public int Id { get; set; }
         [Required]
+        [StringLength(40)]
         public string Name { get; set; }
         public DateTime? Created { get; set; }
         public ICollection<Message> Messages { get; set; }

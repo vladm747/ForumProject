@@ -1,7 +1,9 @@
-﻿using Forum.Helpers;
+﻿using Forum.Filters;
+using Forum.Helpers;
 using Forum_DAL.UoW;
 using ForumBLL.DTO;
 using ForumBLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,14 +13,16 @@ namespace Forum.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserRoleController : ControllerBase
+    [ForumExceptionFilter]
+ 
+    public class RoleController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _userService;
         private readonly IRoleService _roleService;
         private readonly JwtSettings _jwtSettings;
 
-        public UserRoleController(
-            IUserService userService,
+        public RoleController(
+            IAuthService userService,
             IRoleService roleService,
             IOptionsSnapshot<JwtSettings> jwtSettings)
         {
@@ -28,6 +32,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost("createRole")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateRole(CreateRoleDTO model)
         {
             await _roleService.CreateRole(model.RoleName);
@@ -35,12 +40,14 @@ namespace Forum.Controllers
         }
 
         [HttpGet("getRoles")]
+        [Authorize]
         public async Task<IActionResult> GetRoles()
         {
             return Ok(await _roleService.GetRoles());
         }
 
         [HttpPost("assignUserToRole")]
+        
         public async Task<IActionResult> AssignUserToRole(AssignUserToRoleDTO model)
         {
             await _userService.AssignUserToRoles(new AssignUserToRoleDTO

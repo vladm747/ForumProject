@@ -5,19 +5,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Forum.Filters;
 
 namespace Forum.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    [ForumExceptionFilter]
+    public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _userService;
         private readonly IRoleService _roleService;
         private readonly JwtSettings _jwtSettings;
 
-        public AccountController(
-            IUserService userService, 
+        public AuthController(
+            IAuthService userService, 
             IRoleService roleService, 
             IOptionsSnapshot<JwtSettings> jwtSettings)
         {

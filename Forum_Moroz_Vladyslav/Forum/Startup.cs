@@ -47,8 +47,9 @@ namespace Forum
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITopicService, TopicService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
 
 
             services.AddIdentity<User, IdentityRole>(options =>
