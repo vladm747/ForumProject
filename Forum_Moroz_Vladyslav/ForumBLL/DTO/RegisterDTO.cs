@@ -23,6 +23,8 @@ namespace ForumBLL.DTO
         [Required]
         [Compare("Password", ErrorMessage = "The password and confirm password fields do not match")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public string Role { get; set; }
 
     }
 }

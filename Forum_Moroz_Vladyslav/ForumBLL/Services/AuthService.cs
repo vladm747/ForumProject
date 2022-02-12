@@ -24,6 +24,10 @@ namespace ForumBLL.Services
 
         public async Task Register(RegisterDTO user)
         {
+            if (user.Role.ToUpper() == "ADMIN")
+            {
+                throw new Exception("admin role can be set only by other admins, please choose the 'user' role");
+            }
             var result = await _userManager.CreateAsync(new User
             {
                 LastName = user.LastName,
@@ -35,6 +39,12 @@ namespace ForumBLL.Services
             if (!result.Succeeded)
             {
                 throw new Exception(string.Join(';', result.Errors.Select(x => x.Description)));
+            }
+            else
+            {
+                var userToCreate = await _userManager.FindByEmailAsync(user.Email);
+
+                var roleResult = await _userManager.AddToRoleAsync(userToCreate, user.Role);
             }
         }
 
