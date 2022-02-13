@@ -24,13 +24,14 @@ export class RegisterComponent implements OnInit {
       LastName: '',
       Email: '',
       Password: '',
-      ConfirmPassword: ''
+      ConfirmPassword: '',
+      Role: 'user'
     });
   }
 
   submit(): void{
 
-    this.http.post('https://localhost:8000/api/Auth/register', this.form.getRawValue())
+    this.http.post('https://localhost:44394/api/Auth/register', this.form.getRawValue())
     .subscribe(res => {
       console.log(res);
     })
