@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Forum.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Forum.Controllers
 {
@@ -14,7 +15,7 @@ namespace Forum.Controllers
     [ForumExceptionFilter]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _userService;
+        private readonly IAuthService _authService;
         private readonly IRoleService _roleService;
         private readonly JwtSettings _jwtSettings;
 
@@ -23,15 +24,15 @@ namespace Forum.Controllers
             IRoleService roleService, 
             IOptionsSnapshot<JwtSettings> jwtSettings)
         {
-            _userService = userService;
+            _authService = userService;
             _roleService = roleService;
             _jwtSettings = jwtSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
-            await _userService.Register(new RegisterDTO
+            await _authService.Register(new RegisterDTO
             {
                 Email = model.Email,
                 FirstName = model.FirstName,
@@ -43,10 +44,10 @@ namespace Forum.Controllers
             return Created(string.Empty, string.Empty);
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> SignIn(SignInDTO model)
         {
-            var user = await _userService.SignIn(new SignInDTO
+            var user = await _authService.SignIn(new SignInDTO
             {
                 Email = model.Email,
                 Password = model.Password
@@ -59,5 +60,14 @@ namespace Forum.Controllers
             return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
         }
 
+        [HttpPost]
+        [Route("SignOut")]
+        [Authorize]
+        public async Task<IActionResult> SignOut()
+        {
+            await _authService.SignOut();
+            
+            return Ok();
+        }
     }
 }

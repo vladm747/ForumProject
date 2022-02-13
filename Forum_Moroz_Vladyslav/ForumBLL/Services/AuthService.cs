@@ -15,19 +15,18 @@ namespace ForumBLL.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthService(UserManager<User> userMenager, RoleManager<IdentityRole> roleManager)
+        public AuthService(UserManager<User> userMenager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _userManager = userMenager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         public async Task Register(RegisterDTO user)
         {
-            if (user.Role.ToUpper() == "ADMIN")
-            {
-                throw new Exception("admin role can be set only by other admins, please choose the 'user' role");
-            }
+            
             var result = await _userManager.CreateAsync(new User
             {
                 LastName = user.LastName,
@@ -74,7 +73,11 @@ namespace ForumBLL.Services
                 throw new System.Exception(string.Join(';', result.Errors.Select(x => x.Description)));
             }
         }
-       
+
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
     }
 
 }

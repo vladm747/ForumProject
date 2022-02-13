@@ -13,6 +13,6 @@ namespace ForumBLL.Interfaces
         Task Register(RegisterDTO model);
         Task<User> SignIn(SignInDTO model);
         Task AssignUserToRoles(AssignUserToRoleDTO assignUserToRole);
-       
+        Task SignOut();
     }
 }
