@@ -37,6 +37,7 @@ namespace Forum.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Password = model.Password,
+                Role = model.Role
             });
 
             return Created(string.Empty, string.Empty);

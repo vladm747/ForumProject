@@ -113,8 +113,8 @@ namespace Forum
                 c.AddSecurityRequirement(security);
             });
 
-        
-            
+
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,9 +128,12 @@ namespace Forum
                 app.UseSwaggerUI();
             }
 
+           
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
 
