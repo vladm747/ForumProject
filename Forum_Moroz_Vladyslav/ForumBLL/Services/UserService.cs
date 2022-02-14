@@ -30,7 +30,7 @@ namespace ForumBLL.Services
         public async Task DeleteUser(string email)
         {
             var userToDelete = await _userManager.FindByEmailAsync(email);
-
+            
             if (userToDelete == null)
             {
                 throw new ArgumentException($"User with email '{email}' does not exists");
@@ -48,9 +48,9 @@ namespace ForumBLL.Services
             await _userManager.DeleteAsync(userToDelete);
         }
 
-        public IQueryable GetAllUsersAsync()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return _userManager.Users.ToList().AsQueryable();
+            return await _userManager.Users.ToListAsync();
         }
 
         public async Task<User> GetCurrentUserAsync(string email)

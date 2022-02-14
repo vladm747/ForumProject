@@ -11,7 +11,7 @@ namespace ForumBLL.Interfaces
 {
     public interface IUserService
     {
-        IQueryable GetAllUsersAsync();
+        Task<IEnumerable<User>> GetAllUsersAsync();
         Task DeleteUser(string email);
         Task<User> GetCurrentUserAsync(string email);
         Task<User> GetUserByIdAsync(string id);

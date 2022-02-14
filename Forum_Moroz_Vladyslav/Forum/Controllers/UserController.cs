@@ -1,7 +1,11 @@
 ﻿using Forum.Filters;
+using ForumBLL.DTO;
 using ForumBLL.Interfaces;
+using ForumBLL.UoW;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Forum.Controllers
@@ -11,17 +15,72 @@ namespace Forum.Controllers
     [ForumExceptionFilter]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IAdministrationUnitOfWork _UoW;
+        public UserController(IAdministrationUnitOfWork UoW)
         {
-            _userService = userService;
+            _UoW = UoW;
         }
 
         [HttpGet]
         [Route("getAllUsers")]
         public IActionResult GetAllUsers()
         {
-            return Ok(_userService.GetAllUsersAsync());
+            return Ok(_UoW.UserService.GetAllUsersAsync());
+        }
+
+        [HttpPost]
+        [Route("DeleteUser/{email}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteUser(string email)
+        {
+            await _UoW.UserService.DeleteUser(email);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetAllUsers")]
+        /*[Authorize(Roles = "admin")]*/
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(await _UoW.UserService.GetAllUsersAsync());
+        }
+
+        [HttpGet]
+        [Route("User/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            return Ok(await _UoW.UserService.GetUserByIdAsync(id));
+        }
+
+        [HttpGet]
+        [Route("UserId/{email}")]
+        public async Task<IActionResult> GetUserId(string email)
+        {
+            return Ok(await _UoW.UserService.GetUserIdAsync(email));
+        }
+
+        [HttpGet]
+        [Route("UserEmail")]
+        public IActionResult GetUserMail()
+        {
+            return Ok(User.FindFirst(ClaimTypes.Name)?.Value);
+        }
+
+
+        [HttpPatch]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(UserDTO user)
+        {
+            await _UoW.UserService.UpdateUser(user);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("current")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            string email = User.FindFirst(ClaimTypes.Name)?.Value;
+            return Ok(await _UoW.UserService.GetCurrentUserAsync(email));
         }
     }
 }
