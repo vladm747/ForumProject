@@ -13,7 +13,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
     ) {
 
   }
@@ -32,8 +33,7 @@ export class RegisterComponent implements OnInit {
   submit(): void{
 
     this.http.post('https://localhost:44394/api/Auth/Register', this.form.getRawValue())
-    .subscribe(res => {
-      console.log(res);
-    })
+    .subscribe(() => this.router.navigate(['/login']));
+
   }
 }

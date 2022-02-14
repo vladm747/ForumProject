@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Forum.Filters;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Forum.Controllers
 {
@@ -54,10 +55,18 @@ namespace Forum.Controllers
             });
 
             if (user is null) return BadRequest();
-
+            
             var roles = await _roleService.GetRoles(user);
+            var token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
+            HttpContext.Response.Cookies.Append(".AspNetCore.Application.Id", token,
+              new CookieOptions
+              {
+                  MaxAge = TimeSpan.FromDays(30),
+                  SameSite = SameSiteMode.None,
+                  Secure = true
+              });
 
-            return Ok(JwtHelper.GenerateJwt(user, roles, _jwtSettings));
+            return Ok(token);
         }
 
         [HttpPost]
