@@ -7,10 +7,10 @@ namespace ForumBLL.DTO
 {
     public class SignInDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter email")]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter password")]
         public string Password { get; set; }
     }
 }

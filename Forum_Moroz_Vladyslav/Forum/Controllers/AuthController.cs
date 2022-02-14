@@ -58,7 +58,7 @@ namespace Forum.Controllers
             
             var roles = await _roleService.GetRoles(user);
             var token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-            HttpContext.Response.Cookies.Append(".AspNetCore.Application.Id", token,
+            HttpContext.Response.Cookies.Append("JWT Token", token,
               new CookieOptions
               {
                   MaxAge = TimeSpan.FromDays(30),

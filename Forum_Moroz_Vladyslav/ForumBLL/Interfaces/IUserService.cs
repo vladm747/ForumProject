@@ -1,4 +1,5 @@
-﻿using ForumDAL.Entities.Auth;
+﻿using ForumBLL.DTO;
+using ForumDAL.Entities.Auth;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,10 @@ namespace ForumBLL.Interfaces
     public interface IUserService
     {
         IQueryable GetAllUsersAsync();
+        Task DeleteUser(string email);
+        Task<User> GetCurrentUserAsync(string email);
+        Task<User> GetUserByIdAsync(string id);
+        Task<string> GetUserIdAsync(string email);
+        Task UpdateUser(UserDTO user);
     }
 }
