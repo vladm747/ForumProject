@@ -73,7 +73,7 @@ namespace ForumBLL.Services
         {
             if (message == null)
                 throw new ArgumentNullException(nameof(message) + "MessageService");
-            if (!_database.Messages.GetAll().Contains(message))
+            if (_database.Messages.GetAll().FirstOrDefault(x => x.Id == message.Id) == null)
                 throw new ArgumentException($"There is no message with id: {message.Id}");
 
             await _database.Messages.UpdateAsync(message);

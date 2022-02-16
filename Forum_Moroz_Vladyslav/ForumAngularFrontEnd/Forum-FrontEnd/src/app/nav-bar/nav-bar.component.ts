@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     Emitters.authEmitter.subscribe(
       (auth: boolean) => {
-        this.authenticated = auth;
+        this.authenticated = auth; 
       }
     );
   }

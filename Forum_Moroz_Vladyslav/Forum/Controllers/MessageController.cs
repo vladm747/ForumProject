@@ -22,7 +22,8 @@ namespace Forum.Controllers
         }
         // GET: api/<MessageController>
         [HttpGet]
-        public IActionResult Get([FromQuery] int topicId)
+        [Route("getMessagesByTopicId")]
+        public IActionResult GetMessagesOfTopic([FromQuery] int topicId)
         {
             return Ok(_messageService.GetMessageListByTopicIdAsync(topicId));
         }
@@ -37,6 +38,7 @@ namespace Forum.Controllers
 
         // POST api/<MessageController>
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> CreateMessage([FromBody] Message message)
         {
             await _messageService.AddMessageAsync(message);

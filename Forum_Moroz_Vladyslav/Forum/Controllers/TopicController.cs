@@ -38,6 +38,7 @@ namespace Forum.Controllers
 
         // POST api/<TopicController>
         [HttpPost("create")]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> CreateTopic([FromBody] Topic topic)
         {
             await _topicService.CreateTopicAsync(topic);
