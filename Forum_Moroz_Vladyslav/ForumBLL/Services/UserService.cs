@@ -55,16 +55,12 @@ namespace ForumBLL.Services
 
         public async Task<User> GetCurrentUserAsync(string email)
         {
-            var userToFind = await _userManager.FindByEmailAsync(email);
+            if (email == null)
+            {
+                throw new ArgumentException("There is no current logged in user from that computer.");
+            }
 
-            if (userToFind == null)
-            {
-                throw new Exception($"There is no user with email: '{email}' in database");
-            }
-            else
-            {
-                return userToFind;
-            }
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task UpdateUser(UserDTO user)

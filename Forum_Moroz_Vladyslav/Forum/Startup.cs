@@ -6,6 +6,7 @@ using Forum_DAL.Repositories;
 using Forum_DAL.UoW;
 using ForumBLL.Interfaces;
 using ForumBLL.Services;
+using ForumBLL.UoW;
 using ForumDAL.Entities.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -50,12 +51,20 @@ namespace Forum
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAdministrationUnitOfWork, AdministrationUnitOfWork>();
 
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
-            }).AddEntityFrameworkStores<ForumContext>();
+            }).AddEntityFrameworkStores<ForumContext>()
+            .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+               opt.TokenLifespan = TimeSpan.FromHours(1));
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
 
@@ -71,6 +80,9 @@ namespace Forum
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
+                 .AddCookie(options => {
+                     options.LoginPath = "/Auth/Login/";
+                 })
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
@@ -105,6 +117,9 @@ namespace Forum
                                     Id = "Bearer",
                                     Type = ReferenceType.SecurityScheme
                                 },
+                                Scheme = "oauth2",
+                                Name = "Bearer",
+                                In = ParameterLocation.Header,
                                 UnresolvedReference = true
                             },
                             new List<string>()
@@ -141,6 +156,15 @@ namespace Forum
 
             app.UseRouting();
             app.UseCors();
+
+            app.Use(async (context, next) =>
+            {
+                var token = context.Request.Cookies["JWT"];
+                if (!string.IsNullOrEmpty(token))
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                await next();
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
 

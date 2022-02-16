@@ -49,14 +49,14 @@ namespace ForumBLL.Services
 
         public async Task<User> SignIn(SignInDTO signIn)
         {
-            var user = _userManager.Users.FirstOrDefault(login => login.Email == signIn.Email);
+            var user = _userManager.Users.SingleOrDefault(login => login.UserName == signIn.Email);
 
             if (user == null)
             {
-                throw new System.Exception($"User not found {signIn.Email}.");
+                throw new System.Exception($"User with email: '{signIn.Email}' is not found.");
             }
                 
-            return await _userManager.CheckPasswordAsync(user, signIn.Password) ? user : null;
+            return await _userManager.CheckPasswordAsync(user, signIn.Password) ? user : throw new ArgumentException("Wrong Password");
         }
 
         public async Task AssignUserToRoles(AssignUserToRoleDTO assignUserToRole)

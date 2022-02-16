@@ -43,20 +43,16 @@ namespace Forum.Controllers
             return Created(string.Empty, string.Empty);
         }
 
-        [HttpPost("Login")]
+        [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> SignIn(SignInDTO model)
         {
-            var user = await _UoW.AuthService.SignIn(new SignInDTO
-            {
-                Email = model.Email,
-                Password = model.Password
-            });
+            var user = await _UoW.AuthService.SignIn(model);
 
-            if (user is null) return BadRequest();
-            
             var roles = await _UoW.RoleService.GetRoles(user);
             var token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-            HttpContext.Response.Cookies.Append("JWT Token", token,
+          
+            HttpContext.Response.Cookies.Append("JWT", token,
               new CookieOptions
               {
                   MaxAge = TimeSpan.FromDays(30),
@@ -64,7 +60,7 @@ namespace Forum.Controllers
                   Secure = true
               });
 
-            return Ok(token);
+            return Ok();
         }
 
         [HttpPost]
@@ -73,7 +69,14 @@ namespace Forum.Controllers
         public async Task<IActionResult> SignOut()
         {
             await _UoW.AuthService.SignOut();
-            
+            HttpContext.Response.Cookies.Append("JWT", "",
+                 new CookieOptions
+                 {
+                     MaxAge = TimeSpan.FromMilliseconds(1),
+                     SameSite = SameSiteMode.None,
+                     Secure = true
+                 });
+
             return Ok();
         }
     }

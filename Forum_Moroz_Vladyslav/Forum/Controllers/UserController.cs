@@ -5,6 +5,7 @@ using ForumBLL.UoW;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -21,12 +22,6 @@ namespace Forum.Controllers
             _UoW = UoW;
         }
 
-        [HttpGet]
-        [Route("getAllUsers")]
-        public IActionResult GetAllUsers()
-        {
-            return Ok(_UoW.UserService.GetAllUsersAsync());
-        }
 
         [HttpPost]
         [Route("DeleteUser/{email}")]
@@ -39,8 +34,8 @@ namespace Forum.Controllers
 
         [HttpGet]
         [Route("GetAllUsers")]
-        /*[Authorize(Roles = "admin")]*/
-        public async Task<IActionResult> GetUsers()
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _UoW.UserService.GetAllUsersAsync());
         }
@@ -79,8 +74,16 @@ namespace Forum.Controllers
         [Route("current")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            string email = User.FindFirst(ClaimTypes.Name)?.Value;
-            return Ok(await _UoW.UserService.GetCurrentUserAsync(email));
+            try
+            {
+                string email = User.FindFirst(ClaimTypes.Name)?.Value;
+               
+                return Ok(await _UoW.UserService.GetCurrentUserAsync(email));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

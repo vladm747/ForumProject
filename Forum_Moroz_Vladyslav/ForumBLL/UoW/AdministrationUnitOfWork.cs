@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ForumBLL.UoW
 {
-    public class AdministrationUnitOfWork
+    public class AdministrationUnitOfWork: IAdministrationUnitOfWork
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
