@@ -10,7 +10,6 @@ namespace Forum_DAL.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(int id);
-        Task CreateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task DeleteByIdAsync(int id);
     }

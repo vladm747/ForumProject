@@ -1,6 +1,7 @@
 ﻿using Forum_DAL.Context;
 using Forum_DAL.Entities;
 using Forum_DAL.Interfaces;
+using ForumDAL.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,21 @@ namespace Forum_DAL.Repositories
         {
             _topicContext = topicContext;
         }
-        public async Task CreateAsync(Topic entity)
+        public async Task CreateAsync(Topic entity, string email)
         {
-            await _topicContext.AddAsync(entity);
+            var user = await _topicContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (user != null)
+            {
+                entity.UserId = user.Id;
+            }
+
+            await _topicContext.AddAsync(new Topic
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Created = DateTime.Now,
+                UserId = entity.UserId
+            });
             await _topicContext.SaveChangesAsync();
         }
 
@@ -46,7 +59,7 @@ namespace Forum_DAL.Repositories
 
         public IEnumerable<Topic> GetAllTopics()
         {
-            return _topicContext.Topics.Include(x => x.Messages).ToList();
+           return _topicContext.Topics.Include(x => x.Messages).ToList();
         }
 
         public async Task<Topic> GetByIdAsync(int id)

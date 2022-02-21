@@ -1,7 +1,9 @@
-﻿using Forum_DAL.Entities;
+﻿using AutoMapper;
+using Forum_DAL.Entities;
 using Forum_DAL.Interfaces;
 using Forum_DAL.UoW;
 using ForumBLL.Interfaces;
+using ForumDAL.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace ForumBLL.Services
     public class MessageService : IMessageService
     {
         private  IUnitOfWork _database;
-
+        private readonly IMapper _mapper;
         public IUnitOfWork Database
         {
             get
@@ -28,15 +30,22 @@ namespace ForumBLL.Services
         public MessageService(IUnitOfWork unitOfWork)
         {
             _database = unitOfWork;
+            var config = new MapperConfiguration(c =>
+            {
+                c.CreateMap<MessageDTO, Message>().ReverseMap();
+            });
+            _mapper = new Mapper(config);
         }
 
-        public async Task AddMessageAsync(Message message)
+        public async Task AddMessageAsync(MessageDTO message, string email)
         {
-            if (_database.Messages.GetAll().Contains(message))
+            if (_database.Messages.GetAll().FirstOrDefault(x => x.Id == message.Id) != null)
             {
                 throw new ArgumentException($"Message '{message.Title}' already exists");
             }
-            await _database.Messages.CreateAsync(message);
+            var messageBase = _mapper.Map<MessageDTO, Message>(message);
+
+            await _database.Messages.CreateAsync(messageBase, email);
             await _database.SaveAsync();
         }
 
@@ -59,14 +68,14 @@ namespace ForumBLL.Services
             await _database.SaveAsync();
         }
 
-        public async Task<Message> GetMessageByIdAsync(int id)
+        public async Task<MessageDTO> GetMessageByIdAsync(int id)
         {
             var item = await _database.Messages.GetByIdAsync(id);
             if(item == null)
             {
                 throw new ArgumentException($"There is no message with id: {id}");
             }
-            return item;
+            return _mapper.Map<Message, MessageDTO> (item);
         }
 
         public async Task UpdateMessageAsync(Message message)
@@ -81,9 +90,17 @@ namespace ForumBLL.Services
             await _database.SaveAsync();    
         }
 
-        public IEnumerable<Message> GetMessageListByTopicIdAsync(int topicId)
+        public IEnumerable<MessageDTO> GetMessageListByTopicIdAsync(int topicId)
         {
-            return _database.Messages.GetAll().Where(x => x.TopicId == topicId);
+            var messages = _database.Messages.GetAll().Where(x => x.TopicId == topicId);
+
+            List<MessageDTO> result = new List<MessageDTO>();
+
+            foreach (var item in messages)
+            {
+                result.Add(_mapper.Map<Message, MessageDTO>(item));
+            }
+            return result;
         }
     }
 }

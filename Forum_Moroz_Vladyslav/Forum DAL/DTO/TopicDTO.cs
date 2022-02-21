@@ -1,13 +1,13 @@
-﻿using ForumDAL.Entities.Auth;
+﻿using Forum_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Forum_DAL.Entities
+namespace ForumDAL.DTO
 {
-    public class Topic
+    public class TopicDTO
     {
         [Key]
         public int Id { get; set; }
@@ -18,7 +18,6 @@ namespace Forum_DAL.Entities
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public ICollection<Message> Messages { get; set; }
-        public User User { get; set; }
+        public ICollection<MessageDTO> Messages { get; set; }
     }
 }

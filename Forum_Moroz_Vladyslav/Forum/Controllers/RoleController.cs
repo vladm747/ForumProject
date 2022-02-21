@@ -37,7 +37,7 @@ namespace Forum.Controllers
             return Ok();
         }
 
-        [HttpGet("getRoles")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetRoles()
         {
@@ -45,7 +45,6 @@ namespace Forum.Controllers
         }
 
         [HttpPost("assignUserToRole")]
-        
         public async Task<IActionResult> AssignUserToRole(AssignUserToRoleDTO model)
         {
             await _UoW.AuthService.AssignUserToRoles(new AssignUserToRoleDTO

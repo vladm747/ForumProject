@@ -1,4 +1,5 @@
 ﻿using Forum_DAL.Entities;
+using ForumDAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Forum_DAL.Interfaces
     {
         IEnumerable<Message> GetAll();
         Task UpdateAsync(Message entity);
+        Task CreateAsync(Message entity, string email);
     }
 }

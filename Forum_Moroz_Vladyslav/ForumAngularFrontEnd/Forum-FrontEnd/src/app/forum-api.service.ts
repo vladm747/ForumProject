@@ -15,11 +15,11 @@ export class ForumApiService {
 
   //Topic
   getTopicList(): Observable<any[]> {
-    return this.http.get<any>(this.APIurl + '/Topic/getAllTopics');
+    return this.http.get<any>(this.APIurl + '/Topic/');
   }
 
   addTopic(data: any) {
-    return this.http.post(this.APIurl + '/Topic/create', data);
+    return this.http.post(this.APIurl + '/Topic/', data);
   }
 
   deleteTopic(id: number|string, data: any) {
@@ -53,5 +53,13 @@ export class ForumApiService {
     return this.http.delete(this.APIurl + `/Message/${id}`)
   }
 
+  //User
 
+  getCurrentUser() {
+    return this.http.get(this.APIurl + '/User/current')
+  }
+
+  getUserById(id: number|string): any {
+    return this.http.get(this.APIurl + `/User/${id}`)
+  }
 }

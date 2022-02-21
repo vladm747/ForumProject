@@ -1,7 +1,9 @@
-﻿using Forum_DAL.Entities;
+﻿using AutoMapper;
+using Forum_DAL.Entities;
 using Forum_DAL.Interfaces;
 using Forum_DAL.UoW;
 using ForumBLL.Interfaces;
+using ForumDAL.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace ForumBLL.Services
     public class TopicService : ITopicService
     {
         private IUnitOfWork _database;
-
+        private readonly IMapper _mapper;
         public IUnitOfWork Database
         {
             get
@@ -27,26 +29,44 @@ namespace ForumBLL.Services
         public TopicService(IUnitOfWork unitOfWork)
         {
             _database = unitOfWork;
+            var config = new MapperConfiguration(c =>
+            {
+                c.CreateMap<TopicDTO, Topic>().ReverseMap();
+                c.CreateMap<MessageDTO, Message>().ReverseMap();
+            });
+            _mapper = new Mapper(config);
         }
 
-        public async Task CreateTopicAsync(Topic topic)
+        public async Task CreateTopicAsync(TopicDTO topic, string email)
         {
-            if (_database.Topics.GetAllTopics().Contains(topic))
+            if (_database.Topics.GetAllTopics().FirstOrDefault(x => x.Id == topic.Id) != null)
                 throw new ArgumentException($"The topic you wanna add already exists in the database!");
-            await _database.Topics.CreateAsync(topic);
+            var topicBase = _mapper.Map<TopicDTO, Topic>(topic);
+            await _database.Topics.CreateAsync(topicBase, email);
             await _database.SaveAsync();    
         }
 
-        public IEnumerable<Topic> GetAllTopicsAsync()
+        public IEnumerable<TopicDTO> GetAllTopicsAsync()
         {
-            return _database.Topics.GetAllTopics();
+
+            var topics = _database.Topics.GetAllTopics();
+
+            List<TopicDTO> result = new List<TopicDTO>();
+
+            foreach (var item in topics)
+            {
+                result.Add(_mapper.Map<Topic, TopicDTO>(item));
+            }
+            return result;
         }
 
-        public async Task<Topic> GetTopicByIdAsync(int id)
+        public async Task<TopicDTO> GetTopicByIdAsync(int id)
         {
             if (!_database.Topics.GetAllTopics().Select(x => x.Id).Contains(id))
                 throw new ArgumentException($"There is no topic with id: {id}");
-            return await _database.Topics.GetByIdAsync(id);
+            var topicToFind = await _database.Topics.GetByIdAsync(id);
+
+            return _mapper.Map<Topic, TopicDTO>(topicToFind);
         }
 
         public async Task DeleteTopicAsync(Topic topic)

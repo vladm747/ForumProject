@@ -1,4 +1,5 @@
 ﻿using Forum_DAL.Entities;
+using ForumDAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Forum_DAL.Interfaces
     public interface ITopicRepository: IRepository<Topic>
     {
         IEnumerable<Topic> GetAllTopics();
+        Task CreateAsync(Topic entity, string email);
     }
 }

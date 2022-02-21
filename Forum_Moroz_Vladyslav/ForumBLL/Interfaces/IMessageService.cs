@@ -1,4 +1,5 @@
 ﻿using Forum_DAL.Entities;
+using ForumDAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace ForumBLL.Interfaces
 {
     public interface IMessageService
     {
-        IEnumerable<Message> GetMessageListByTopicIdAsync(int topicId);
-        Task AddMessageAsync(Message message);
+        IEnumerable<MessageDTO> GetMessageListByTopicIdAsync(int topicId);
+        Task AddMessageAsync(MessageDTO message, string email);
         Task DeleteMessageAsync(Message message);
         Task UpdateMessageAsync(Message message);
-        Task<Message> GetMessageByIdAsync(int id);
+        Task<MessageDTO> GetMessageByIdAsync(int id);
         Task DeleteMessageByIdAsync(int id);
     }
 }

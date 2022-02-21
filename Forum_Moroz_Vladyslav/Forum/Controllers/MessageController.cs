@@ -1,8 +1,10 @@
 ﻿using Forum.Filters;
 using Forum_DAL.Entities;
 using ForumBLL.Interfaces;
+using ForumDAL.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -38,10 +40,10 @@ namespace Forum.Controllers
 
         // POST api/<MessageController>
         [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> CreateMessage([FromBody] Message message)
+        public async Task<IActionResult> CreateMessage([FromBody] MessageDTO message)
         {
-            await _messageService.AddMessageAsync(message);
+            var email = User.FindFirst(ClaimTypes.Name)?.Value;
+            await _messageService.AddMessageAsync(message, email);
             return Ok(message);
         }
 

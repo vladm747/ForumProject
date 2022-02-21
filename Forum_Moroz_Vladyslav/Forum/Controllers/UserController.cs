@@ -41,7 +41,7 @@ namespace Forum.Controllers
         }
 
         [HttpGet]
-        [Route("User/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
             return Ok(await _UoW.UserService.GetUserByIdAsync(id));
