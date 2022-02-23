@@ -34,7 +34,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
               </div>
-              <small class="text-muted">{{writeAuthor(item.userId)}}</small>
+              <small class="text-muted">{{authorsMap.get(item.userId)}}</small>
               <small class="text-muted">{{item.created | date:'dd.MM.yyyy h:mm a'}}</small>
             </div>
           </div>

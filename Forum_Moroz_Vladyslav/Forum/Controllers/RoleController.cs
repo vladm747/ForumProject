@@ -38,7 +38,6 @@ namespace Forum.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetRoles()
         {
             return Ok(await _UoW.RoleService.GetRoles());

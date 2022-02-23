@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -61,5 +62,9 @@ export class ForumApiService {
 
   getUserById(id: number|string): any {
     return this.http.get(this.APIurl + `/User/${id}`)
+  }
+
+  getAllUsers() {
+    return this.http.get(this.APIurl + '/User/GetAllUsers')
   }
 }

@@ -34,7 +34,6 @@ namespace Forum.Controllers
 
         [HttpGet]
         [Route("GetAllUsers")]
-        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _UoW.UserService.GetAllUsersAsync());

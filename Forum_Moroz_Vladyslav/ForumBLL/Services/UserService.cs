@@ -48,9 +48,18 @@ namespace ForumBLL.Services
             await _userManager.DeleteAsync(userToDelete);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
-            return await _userManager.Users.ToListAsync();
+            var userList = await _userManager.Users.ToListAsync();
+
+            List<UserDTO> result = new List<UserDTO>();
+
+            foreach (var item in userList)
+            {
+                result.Add(_mapper.Map<User, UserDTO>(item));
+            }
+            
+            return result;
         }
 
         public async Task<User> GetCurrentUserAsync(string email)

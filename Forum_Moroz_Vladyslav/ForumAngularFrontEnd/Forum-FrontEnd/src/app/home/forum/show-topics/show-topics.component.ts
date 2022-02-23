@@ -9,9 +9,11 @@ import { ForumApiService } from 'src/app/forum-api.service';
 export class ShowTopicsComponent implements OnInit {
 
   topicList: Observable<any[]>;
+
   messageList: Observable<any[]>;
   message: string = '';
-  forumMessagesMap: Map<number, string> = new Map()
+  authorsMap: Map<number, string> = new Map()
+  userList: any=[];
 
   constructor(
     private service: ForumApiService
@@ -19,11 +21,18 @@ export class ShowTopicsComponent implements OnInit {
 
   ngOnInit(): void {
     this.topicList = this.service.getTopicList();
-
+    this.showAuthorMap();
   }
 
-  writeAuthor(userid: number|string): string {
-    return `${this.service.getUserById(userid).firstName} ${this.service.getUserById(userid).lastName}`;
-  }
 
+  showAuthorMap() {
+    this.service.getAllUsers().subscribe(data => {
+      this.userList = data;
+
+      for(let i = 0; i < this.userList.length; i++)
+      {
+        this.authorsMap.set(this.userList[i].id, this.userList[i].firstName);
+      }
+    })
   }
+}
