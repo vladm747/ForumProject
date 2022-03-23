@@ -34,8 +34,8 @@ export class ForumApiService {
 
   //Message
 
-  getMessageListByTopicId(): Observable<any[]> {
-    return this.http.get<any>(this.APIurl + '/Message/getMessagesByTopicId');
+  getMessageListByTopicId(topicId : number|string|undefined): Observable<any[]> {
+    return this.http.get<any>(this.APIurl + `/Message/getMessagesByTopicId/${topicId}`);
   }
 
   getMessageById(id: number|string) {
@@ -66,5 +66,11 @@ export class ForumApiService {
 
   getAllUsers() {
     return this.http.get(this.APIurl + '/User/GetAllUsers')
+  }
+
+  //Role
+
+  getRole(){
+    return this.http.get(this.APIurl + '/Role', {withCredentials: true})
   }
 }

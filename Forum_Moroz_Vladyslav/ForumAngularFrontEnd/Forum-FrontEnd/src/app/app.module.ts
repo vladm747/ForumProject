@@ -12,6 +12,7 @@ import { ForumComponent } from './home/forum/forum.component';
 import { ShowTopicsComponent } from './home/forum/show-topics/show-topics.component';
 import { AddEditTopicComponent } from './home/forum/add-edit-topic/add-edit-topic.component';
 import { ForumApiService } from './forum-api.service';
+import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/show-messages.component';
 
 @NgModule({
 
@@ -23,7 +24,8 @@ import { ForumApiService } from './forum-api.service';
     NavBarComponent,
     ForumComponent,
     ShowTopicsComponent,
-    AddEditTopicComponent
+    AddEditTopicComponent,
+    ShowMessagesComponent
   ],
   imports: [
     BrowserModule,

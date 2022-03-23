@@ -1,29 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ForumApiService } from 'src/app/forum-api.service';
+import { ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-show-topics',
   templateUrl: './show-topics.component.html',
   styleUrls: ['./show-topics.component.css']
 })
+
+
 export class ShowTopicsComponent implements OnInit {
 
   topicList: Observable<any[]>;
 
-  messageList: Observable<any[]>;
+  topicId: number | undefined;;
   message: string = '';
   authorsMap: Map<number, string> = new Map()
   userList: any=[];
+  topic: any;
+  titleName: string='';
+  activateAddEditTopicComponent: boolean;
+  isRegist: boolean;
+
+  private subscription: Subscription;
 
   constructor(
-    private service: ForumApiService
+    private service: ForumApiService,
+    private activateRoute: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
+    this.activateRoute.paramMap.pipe(
+      switchMap(params => params.getAll('topicId'))
+    )
+    .subscribe(data=> this.topicId = +data);
     this.topicList = this.service.getTopicList();
     this.showAuthorMap();
   }
 
+  modalAdd() {
+    this.topic = {
+      id: 0,
+      name: null,
+      userId:0,
+      messages: null
+    }
+    this.titleName = 'Add Topic';
+    this.isRegist = true;
+  }
 
   showAuthorMap() {
     this.service.getAllUsers().subscribe(data => {
@@ -35,4 +61,7 @@ export class ShowTopicsComponent implements OnInit {
       }
     })
   }
+
+
+
 }
