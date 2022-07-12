@@ -15,9 +15,9 @@ import {HttpClientModule} from '@angular/common/http';
 export class ShowMessagesComponent implements OnInit {
 
   messageList: Observable<any[]>;
-
+  authorsMap: Map<number, string> = new Map()
   topicId: number | undefined;
-
+  userList: any=[];
   private routeSubscription: Subscription;
   private querySubscription: Subscription;
 
@@ -34,5 +34,17 @@ export class ShowMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageList = this.service.getMessagesByTopicId(this.topicId);
+    this.showAuthorMap();
+  }
+
+  showAuthorMap() {
+    this.service.getAllUsers().subscribe(data => {
+      this.userList = data;
+
+      for(let i = 0; i < this.userList.length; i++)
+      {
+        this.authorsMap.set(this.userList[i].id, this.userList[i].firstName);
+      }
+    })
   }
 }

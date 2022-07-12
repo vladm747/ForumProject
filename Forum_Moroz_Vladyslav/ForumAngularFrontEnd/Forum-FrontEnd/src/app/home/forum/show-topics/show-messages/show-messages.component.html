@@ -1,9 +1,27 @@
-<p>show-messages works!</p>
-//написать табличку или что либо для отображения сообщений в теме
-//и додумать как передать нужное id в динамике
-<ul>
+<h1>Messages of Chosen Topic </h1>
+<!-- //написать табличку или что либо для отображения сообщений в теме
+//и додумать как передать нужное id в динамике -->
+<!-- <ul>
   <li *ngFor="let item of messageList|async">
     {{item.title}}
     {{item.content}}
   </li>
-</ul>
+</ul> -->
+<div class="album py-5">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+      <div class="col" *ngFor="let item of messageList|async" >
+        <div class="card" style="width: 18rem;" >
+          <div class="card-body">
+            <h5 class="card-title">{{item.title}}</h5>
+            <p class="card-text">{{item.content}}</p>
+            <small class="text-muted">{{authorsMap.get(item.userId)}}</small>
+            <small class="text-muted float-end m-b-0">{{item.creationDateTime | date:'dd.MM.yyyy h:mm a'}}</small>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
