@@ -32,7 +32,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
                 <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['view', 'topicId']"
-                [queryParams]="{'topicId': 10}">View</button>
+                [queryParams]="{'topicId': item.id}">View</button>
 
               </div>
               <small class="text-muted">{{authorsMap.get(item.userId)}}</small>

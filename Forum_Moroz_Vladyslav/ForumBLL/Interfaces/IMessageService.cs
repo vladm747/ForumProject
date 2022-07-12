@@ -10,7 +10,7 @@ namespace ForumBLL.Interfaces
 {
     public interface IMessageService
     {
-        IEnumerable<MessageDTO> GetMessageListByTopicIdAsync(int topicId);
+        ICollection<MessageDTO> GetMessageListByTopicIdAsync(int topicId);
         Task AddMessageAsync(MessageDTO message, string email);
         Task DeleteMessageAsync(Message message);
         Task UpdateMessageAsync(Message message);

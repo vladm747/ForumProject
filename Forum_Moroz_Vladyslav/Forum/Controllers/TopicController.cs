@@ -45,7 +45,7 @@ namespace Forum.Controllers
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
             await _topicService.CreateTopicAsync(topic, email);
-            return Created("/topic/" + topic.Id, topic);
+            return Created("/topic/" + topic.Id, topic);//why  did i write that:?
         }
 
         // DELETE api/<TopicController>/5

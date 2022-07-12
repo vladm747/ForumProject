@@ -90,7 +90,7 @@ namespace ForumBLL.Services
             await _database.SaveAsync();    
         }
 
-        public IEnumerable<MessageDTO> GetMessageListByTopicIdAsync(int topicId)
+        public ICollection<MessageDTO> GetMessageListByTopicIdAsync(int topicId)
         {
             var messages = _database.Messages.GetAll().Where(x => x.TopicId == topicId);
 

@@ -34,8 +34,8 @@ export class ForumApiService {
 
   //Message
 
-  getMessageListByTopicId(topicId : number|string|undefined): Observable<any[]> {
-    return this.http.get<any>(this.APIurl + `/Message/getMessagesByTopicId/${topicId}`);
+  getMessagesByTopicId(topicId : number|string|undefined): Observable<any[]> {
+    return this.http.get<any>(this.APIurl + `/Message/getMessagesByTopicId?topicId=${topicId}`);
   }
 
   getMessageById(id: number|string) {

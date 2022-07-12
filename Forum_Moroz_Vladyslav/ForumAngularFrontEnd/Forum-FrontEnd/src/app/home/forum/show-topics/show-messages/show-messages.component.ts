@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 import { ForumApiService } from 'src/app/forum-api.service';
 import { ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+
 @Component({
   selector: 'app-show-messages',
   templateUrl: './show-messages.component.html',
@@ -29,7 +33,6 @@ export class ShowMessagesComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.messageList = this.service.getMessageListByTopicId(this.topicId);
+    this.messageList = this.service.getMessagesByTopicId(this.topicId);
   }
-
 }

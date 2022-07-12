@@ -25,7 +25,7 @@ namespace Forum.Controllers
         // GET: api/<MessageController>
         [HttpGet]
         [Route("getMessagesByTopicId")]
-        public IActionResult GetMessagesOfTopic([FromQuery] int topicId)
+        public IActionResult GetMessagesOfTopic(int topicId)
         {
             return Ok(_messageService.GetMessageListByTopicIdAsync(topicId));
         }
