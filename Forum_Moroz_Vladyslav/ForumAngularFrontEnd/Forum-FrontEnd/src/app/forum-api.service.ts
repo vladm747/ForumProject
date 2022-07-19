@@ -20,7 +20,7 @@ export class ForumApiService {
   }
 
   addTopic(data: any) {
-    return this.http.post(this.APIurl + '/Topic/', data);
+    return this.http.post(this.APIurl + '/Topic', data, {withCredentials: true});
   }
 
   deleteTopic(id: number|string, data: any) {

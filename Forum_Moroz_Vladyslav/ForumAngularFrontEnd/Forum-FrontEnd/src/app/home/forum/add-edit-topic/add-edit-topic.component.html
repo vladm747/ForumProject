@@ -5,11 +5,10 @@
     <div class="col-sm-4">
       <form>
         <div class="mb-2">
-          <input class="form-control" placeholder="Topic Name"  type="text">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" placeholder="Topic Name" [(ngModel)]="name" name="name">
         </div>
-        <div class="mb-2">
-          <input class="btn btn-danger" value="Create"  type="submit">
-        </div>
+        <button (click)="addTopic()" *ngIf="topic.id==0" class="btn btn-primary">Add</button>
       </form>
     </div>
   </div>

@@ -44,11 +44,18 @@ export class ShowTopicsComponent implements OnInit {
     this.topic = {
       id: 0,
       name: null,
-      userId:0,
-      messages: null
+      created: null,
+      userId: null,
+      messages: []
     }
     this.titleName = 'Add Topic';
+    this.activateAddEditTopicComponent = true;
     this.isRegist = true;
+  }
+
+  modalClose(){
+    this.activateAddEditTopicComponent=false;
+    this.topicList = this.service.getTopicList();
   }
 
   showAuthorMap() {
