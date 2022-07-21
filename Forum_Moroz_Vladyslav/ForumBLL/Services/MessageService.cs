@@ -92,7 +92,7 @@ namespace ForumBLL.Services
 
         public ICollection<MessageDTO> GetMessageListByTopicIdAsync(int topicId)
         {
-            var messages = _database.Messages.GetAll().Where(x => x.TopicId == topicId);
+            var messages = _database.Messages.GetAll().Where(x => x.TopicId == topicId).OrderByDescending(t => t.CreationDateTime);
 
             List<MessageDTO> result = new List<MessageDTO>();
 

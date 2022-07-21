@@ -13,7 +13,7 @@ import { ShowTopicsComponent } from './home/forum/show-topics/show-topics.compon
 import { AddEditTopicComponent } from './home/forum/add-edit-topic/add-edit-topic.component';
 import { ForumApiService } from './forum-api.service';
 import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/show-messages.component';
-
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
 
   declarations: [
@@ -32,7 +32,8 @@ import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/sh
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [ForumApiService],
   bootstrap: [AppComponent]
