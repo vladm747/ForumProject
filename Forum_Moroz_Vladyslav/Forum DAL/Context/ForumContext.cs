@@ -27,6 +27,7 @@ namespace Forum_DAL.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<IdentityRole>().HasData(new[]
             {

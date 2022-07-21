@@ -43,7 +43,7 @@ export class ForumApiService {
   }
 
   addMessage(data: any) {
-    return this.http.post(this.APIurl + '/Message/create', data);
+    return this.http.post(this.APIurl + '/Message', data, {withCredentials: true});
   }
 
   updateMessage(data: any) {

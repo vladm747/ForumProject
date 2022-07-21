@@ -1,6 +1,14 @@
 <h1 id="title-of-page">Messages of Chosen Topic </h1>
 
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary float-end m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+(click)="modalAdd()">
+  Add message
+</button>
+
+
+
 
 <div class="container">
   <div *ngFor="let item of messageList|async" >
@@ -23,3 +31,18 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{titleName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        (click)="modalClose()" id="add-edit-modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <app-add-edit-message [message]="message" *ngIf="activateAddEditMessageComponent" ></app-add-edit-message>
+      </div>
+    </div>
+  </div>
+</div>

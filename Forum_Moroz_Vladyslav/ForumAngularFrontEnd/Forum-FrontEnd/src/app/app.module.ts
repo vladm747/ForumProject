@@ -14,6 +14,7 @@ import { AddEditTopicComponent } from './home/forum/add-edit-topic/add-edit-topi
 import { ForumApiService } from './forum-api.service';
 import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/show-messages.component';
 import {MatCardModule} from '@angular/material/card';
+import { AddEditMessageComponent } from './home/forum/show-topics/show-messages/add-edit-message/add-edit-message.component';
 @NgModule({
 
   declarations: [
@@ -25,7 +26,8 @@ import {MatCardModule} from '@angular/material/card';
     ForumComponent,
     ShowTopicsComponent,
     AddEditTopicComponent,
-    ShowMessagesComponent
+    ShowMessagesComponent,
+    AddEditMessageComponent
   ],
   imports: [
     BrowserModule,
