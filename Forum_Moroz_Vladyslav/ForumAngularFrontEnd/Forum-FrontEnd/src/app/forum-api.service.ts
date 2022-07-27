@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -23,8 +22,8 @@ export class ForumApiService {
     return this.http.post(this.APIurl + '/Topic', data, {withCredentials: true});
   }
 
-  deleteTopic(id: number|string, data: any) {
-    return this.http.delete(this.APIurl + `/Topic/${id}`)
+  deleteTopic(id: number|string) {
+    return this.http.delete(this.APIurl + `/Topic/${id}`, {withCredentials: true})
   }
 
   getTopicById(id: number|string) {
@@ -47,17 +46,17 @@ export class ForumApiService {
   }
 
   updateMessage(data: any) {
-    return this.http.put(this.APIurl + 'Message', data);
+    return this.http.put(this.APIurl + '/Message', data,  {withCredentials: true});
   }
 
-  deleteMessage(id: number|string, data: any) {
-    return this.http.delete(this.APIurl + `/Message/${id}`)
+  deleteMessage(id: number|string) {
+    return this.http.delete(this.APIurl + `/Message/${id}`,  {withCredentials: true})
   }
 
   //User
 
   getCurrentUser() {
-    return this.http.get(this.APIurl + '/User/current')
+    return this.http.get(this.APIurl + '/User/current' )
   }
 
   getUserById(id: number|string): any {

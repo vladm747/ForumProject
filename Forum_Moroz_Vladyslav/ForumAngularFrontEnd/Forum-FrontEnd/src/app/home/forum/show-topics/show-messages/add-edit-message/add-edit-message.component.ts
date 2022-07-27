@@ -55,4 +55,31 @@ export class AddEditMessageComponent implements OnInit {
       }, 4000);
     })
   }
+
+  updateMessage() {
+    var message = {
+      id: this.id,
+      title: this.title,
+      content: this.content
+    }
+    var id:number = this.id;
+
+    this.service.updateMessage(message).subscribe(res =>{
+      var closeModalBtn = document.getElementById('add-edit-modal-close');
+      if(closeModalBtn){
+        closeModalBtn.click();
+      }
+
+      var showUpdateSuccess = document.getElementById('update-success-alert');
+      if(showUpdateSuccess){
+        showUpdateSuccess.style.display = "block";
+      }
+
+      setTimeout(function() {
+        if(showUpdateSuccess) {
+          showUpdateSuccess.style.display = "none"
+        }
+      }, 4000);
+    })
+  }
 }

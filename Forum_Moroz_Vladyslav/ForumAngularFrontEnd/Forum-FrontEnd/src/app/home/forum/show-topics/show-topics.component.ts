@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ForumApiService } from 'src/app/forum-api.service';
 import { ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-show-topics',
@@ -23,6 +23,7 @@ export class ShowTopicsComponent implements OnInit {
   titleName: string='';
   activateAddEditTopicComponent: boolean;
   isRegist: boolean;
+  isAdmin: boolean;
 
   private subscription: Subscription;
 
@@ -69,6 +70,24 @@ export class ShowTopicsComponent implements OnInit {
     })
   }
 
+  delete(item: any){
+    if(confirm(`Are you sure you wanna delete message ${item.id}`)){
+      this.service.deleteTopic(item.id).subscribe(res => {
+        var showDeleteSuccess = document.getElementById('delete-success-alert');
+        if(showDeleteSuccess){
+          showDeleteSuccess.style.display = "block";
+        }
 
+        setTimeout(function() {
+          if(showDeleteSuccess) {
+            showDeleteSuccess.style.display = "none"
+          }
+        }, 4000);
+        this.topicList = this.service.getTopicList();
+      });
+
+    }
+
+  }
 
 }

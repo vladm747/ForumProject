@@ -5,13 +5,15 @@ import { ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 
 
+
 @Component({
   selector: 'app-show-messages',
   templateUrl: './show-messages.component.html',
   styleUrls: ['./show-messages.component.css']
 })
 export class ShowMessagesComponent implements OnInit {
-
+  userId:string;
+  currentUser: any;
   messageList: Observable<any[]>;
   authorsMap: Map<number, string> = new Map()
   topicId: number | undefined;
@@ -36,6 +38,9 @@ export class ShowMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageList = this.service.getMessagesByTopicId(this.topicId);
+    // this.service.getCurrentUser().subscribe(data => {
+    //   this.currentUser = data;
+    // });
     this.showAuthorMap();
   }
 
@@ -63,8 +68,38 @@ export class ShowMessagesComponent implements OnInit {
     this.titleName = "Add Message";
     this.isRegist = true;
   }
+
+  modalEdit(item: any){
+    this.message = item;
+    this.titleName = "Edit Message";
+    this.activateAddEditMessageComponent = true;
+  }
+
   modalClose(){
     this.activateAddEditMessageComponent=false;
     this.messageList = this.service.getMessagesByTopicId(this.topicId);
+  }
+  delete(item: any){
+    if(confirm(`Are you sure you wanna delete message ${item.id}`)){
+      this.service.deleteMessage(item.id).subscribe(res => {
+        var closeModalBtn = document.getElementById('add-edit-modal-close');
+        if(closeModalBtn){
+          closeModalBtn.click();
+        }
+
+        var showDeleteSuccess = document.getElementById('delete-success-alert');
+        if(showDeleteSuccess){
+          showDeleteSuccess.style.display = "block";
+        }
+
+        setTimeout(function() {
+          if(showDeleteSuccess) {
+            showDeleteSuccess.style.display = "none"
+          }
+        }, 4000);
+        this.messageList = this.service.getMessagesByTopicId(this.topicId);
+      });
+    }
+
   }
 }
