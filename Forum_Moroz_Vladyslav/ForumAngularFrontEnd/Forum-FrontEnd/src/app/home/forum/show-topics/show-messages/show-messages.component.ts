@@ -38,11 +38,21 @@ export class ShowMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageList = this.service.getMessagesByTopicId(this.topicId);
-    // this.service.getCurrentUser().subscribe(data => {
-    //   this.currentUser = data;
-    // });
-    this.showAuthorMap();
-  }
+    this.service.getCurrentUser().subscribe(
+      (res: any) => {
+        this.currentUser = res;
+      },
+      (err:any) => {
+        console.log(err);
+      }
+      )
+      this.showAuthorMap();
+    }
+
+
+
+
+
 
   showAuthorMap() {
     this.service.getAllUsers().subscribe(data => {

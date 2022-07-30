@@ -62,14 +62,15 @@ namespace ForumBLL.Services
             return result;
         }
 
-        public async Task<User> GetCurrentUserAsync(string email)
+        public async Task<UserDTO> GetCurrentUserAsync(string email)
         {
             if (email == null)
             {
                 throw new ArgumentException("There is no current logged in user from that computer.");
             }
-
-            return await _userManager.FindByEmailAsync(email);
+            var currentUser = await _userManager.FindByEmailAsync(email);
+            var result = _mapper.Map<User, UserDTO>(currentUser);
+            return result;
         }
 
         public async Task UpdateUser(UserDTO user)
