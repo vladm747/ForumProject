@@ -14,7 +14,6 @@ namespace Forum.Controllers
     [ForumExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class TopicController : ControllerBase
     {
         private readonly ITopicService _topicService;
@@ -57,8 +56,8 @@ namespace Forum.Controllers
             await _topicService.DeleteTopicByIdAsync(id);
             return Ok();
         }
-
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteTopic(Topic topic)
         {
             await _topicService.DeleteTopicAsync(topic);

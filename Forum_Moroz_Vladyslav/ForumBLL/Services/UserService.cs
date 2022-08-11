@@ -70,6 +70,7 @@ namespace ForumBLL.Services
             }
             var currentUser = await _userManager.FindByEmailAsync(email);
             var result = _mapper.Map<User, UserDTO>(currentUser);
+            result.Roles = await _userManager.GetRolesAsync(currentUser);
             return result;
         }
 

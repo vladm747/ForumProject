@@ -2,6 +2,7 @@
 using Forum_DAL.Entities;
 using ForumBLL.Interfaces;
 using ForumDAL.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -13,6 +14,7 @@ namespace Forum.Controllers
 {
     [ForumExceptionFilter]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class MessageController : ControllerBase
     {
@@ -24,6 +26,7 @@ namespace Forum.Controllers
         }
         // GET: api/<MessageController>
         [HttpGet]
+        [AllowAnonymous]
         [Route("getMessagesByTopicId")]
         public IActionResult GetMessagesOfTopic(int topicId)
         {
@@ -32,6 +35,7 @@ namespace Forum.Controllers
 
         // GET api/<MessageController>/5
         [HttpGet]
+        [AllowAnonymous]
         [Route("{id}")]
         public async Task<IActionResult> GetMessage(int id)
         {
@@ -40,6 +44,7 @@ namespace Forum.Controllers
 
         // POST api/<MessageController>
         [HttpPost]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> CreateMessage([FromBody] MessageDTO message)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
@@ -49,6 +54,7 @@ namespace Forum.Controllers
 
         // PUT api/<MessageController>/5
         [HttpPut]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> UpdateMessage( [FromBody] Message message)
         {
             await _messageService.UpdateMessageAsync(message);
@@ -57,6 +63,7 @@ namespace Forum.Controllers
 
         // DELETE api/<MessageController>/5
         [HttpDelete]
+        [Authorize(Roles = "admin, user")]
         [Route("{id}")]
         public async Task<IActionResult> DeleteMessageById(int id)
         {
@@ -64,6 +71,7 @@ namespace Forum.Controllers
             return Ok();
         }
         [HttpDelete]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> DeleteMessage(Message message)
         {
             await _messageService.DeleteMessageAsync(message);

@@ -22,6 +22,7 @@ export class ShowMessagesComponent implements OnInit {
   message: any;
   activateAddEditMessageComponent: boolean;
   isRegist: boolean;
+  isAdmin: boolean;
   private routeSubscription: Subscription;
   private querySubscription: Subscription;
 
@@ -49,11 +50,6 @@ export class ShowMessagesComponent implements OnInit {
       this.showAuthorMap();
     }
 
-
-
-
-
-
   showAuthorMap() {
     this.service.getAllUsers().subscribe(data => {
       this.userList = data;
@@ -65,6 +61,16 @@ export class ShowMessagesComponent implements OnInit {
     })
   }
 
+  isAdministrator(): boolean {
+    this.isAdmin = false;
+
+    if(this.currentUser.roles.includes('admin'))
+    {
+      this.isAdmin = true;
+    }
+
+    return this.isAdmin;
+  }
   modalAdd() {
     this.message = {
       id:0,

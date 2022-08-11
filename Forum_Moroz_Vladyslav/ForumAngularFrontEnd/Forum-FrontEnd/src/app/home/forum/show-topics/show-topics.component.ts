@@ -15,6 +15,7 @@ export class ShowTopicsComponent implements OnInit {
 
   topicList: Observable<any[]>;
 
+  currentUser: any;
   topicId: number | undefined;;
   message: string = '';
   authorsMap: Map<number, string> = new Map()
@@ -38,7 +39,25 @@ export class ShowTopicsComponent implements OnInit {
     )
     .subscribe(data=> this.topicId = +data);
     this.topicList = this.service.getTopicList();
+    this.service.getCurrentUser().subscribe(
+      (res: any) => {
+        this.currentUser = res;
+      },
+      (err:any) => {
+        console.log(err);
+      })
     this.showAuthorMap();
+  }
+
+  isAdministrator(): boolean {
+    this.isAdmin = false;
+
+    if(this.currentUser.roles.includes('admin'))
+    {
+      this.isAdmin = true;
+    }
+
+    return this.isAdmin;
   }
 
   modalAdd() {
