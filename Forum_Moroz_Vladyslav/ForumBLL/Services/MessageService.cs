@@ -67,6 +67,19 @@ namespace ForumBLL.Services
             await _database.Messages.DeleteAsync(element);
             await _database.SaveAsync();
         }
+           
+        public ICollection<MessageDTO> GetMessageListByUserIdAsync(string userId)
+        {
+            var messageList = _database.Messages.GetByUserIdAsync(userId);
+            var result = new List<MessageDTO>();
+
+            foreach (var item in messageList)
+            {
+                result.Add(_mapper.Map<Message, MessageDTO>(item));
+            }
+            
+            return result;
+        }
 
         public async Task<MessageDTO> GetMessageByIdAsync(int id)
         {

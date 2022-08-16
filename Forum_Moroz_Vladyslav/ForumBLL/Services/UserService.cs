@@ -15,8 +15,10 @@ namespace ForumBLL.Services
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IMessageService _messageService;
         private readonly IMapper _mapper;
-        public UserService(UserManager<User> userManager)
+        
+        public UserService(UserManager<User> userManager, IMessageService messageService)
         {
             _userManager = userManager;
 
@@ -25,6 +27,7 @@ namespace ForumBLL.Services
                 c.CreateMap<UserDTO, User>().ReverseMap();
             });
             _mapper = new Mapper(config);
+            _messageService = messageService;
         }
 
         public async Task DeleteUser(string email)
@@ -58,6 +61,7 @@ namespace ForumBLL.Services
             {
                 result.Add(_mapper.Map<User, UserDTO>(item));
                 result.Last().Roles = await _userManager.GetRolesAsync(item);
+                result.Last().Messages = _messageService.GetMessageListByUserIdAsync(item.Id);
             }
          
             return result;
@@ -72,6 +76,7 @@ namespace ForumBLL.Services
             var currentUser = await _userManager.FindByEmailAsync(email);
             var result = _mapper.Map<User, UserDTO>(currentUser);
             result.Roles = await _userManager.GetRolesAsync(currentUser);
+            result.Messages = _messageService.GetMessageListByUserIdAsync(currentUser.Id);
             return result;
         }
 
@@ -88,7 +93,7 @@ namespace ForumBLL.Services
             await _userManager.UpdateAsync(userToUpdate);
         }
 
-        public async Task<User> GetUserByIdAsync(string id)
+        public async Task<UserDTO> GetUserByIdAsync(string id)
         {
             User userToFind = await _userManager.FindByIdAsync(id);
             
@@ -96,7 +101,11 @@ namespace ForumBLL.Services
             {
                 throw new Exception($"There is no user with id: {id} in database");
             }
-            return userToFind;
+
+            var result = _mapper.Map<User, UserDTO>(userToFind);
+            result.Roles = await _userManager.GetRolesAsync(userToFind);
+            result.Messages = _messageService.GetMessageListByUserIdAsync(userToFind.Id);
+            return result;
         }
 
         public async Task<string> GetUserIdAsync(string email)

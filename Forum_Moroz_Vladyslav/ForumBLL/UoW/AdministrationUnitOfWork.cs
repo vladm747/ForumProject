@@ -14,22 +14,24 @@ namespace ForumBLL.UoW
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<User> _signInManager;
 
+        private IMessageService _messageService;
         private IUserService _userService;
         private IRoleService _roleService;
         private IAuthService _authService;
 
-        public AdministrationUnitOfWork(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
-        {
+        public AdministrationUnitOfWork(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, IMessageService messageService)
+        { 
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _messageService = messageService;
         }
         public IUserService UserService
         {
             get
             {
                 if (_userService == null)
-                    _userService = new UserService(_userManager);
+                    _userService = new UserService(_userManager, _messageService);
                 return _userService;
             }
         }

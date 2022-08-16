@@ -66,7 +66,12 @@ namespace Forum_DAL.Repositories
             return _messageContext.Messages
                 .ToList();//include hz
         }
+        public ICollection<Message> GetByUserIdAsync(string userId)
+        {
+            var result = _messageContext.Messages.Select(x=>x).Where(x=>x.UserId == userId).ToList();
 
+            return result;
+        }
         public async Task<Message> GetByIdAsync(int id)
         {
             var message = await _messageContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
@@ -74,7 +79,7 @@ namespace Forum_DAL.Repositories
                 throw new ArgumentException($"There is no message with id: {id}");
             return message;
         }
-
+       
         public async Task UpdateAsync(Message entity)
         {
             var item = _messageContext.Messages.FirstOrDefault(x => x.Id == entity.Id);

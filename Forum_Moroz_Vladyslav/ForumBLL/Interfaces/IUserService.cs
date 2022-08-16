@@ -14,7 +14,7 @@ namespace ForumBLL.Interfaces
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task DeleteUser(string email);
         Task<UserDTO> GetCurrentUserAsync(string email);
-        Task<User> GetUserByIdAsync(string id);
+        Task<UserDTO> GetUserByIdAsync(string id);
         Task<string> GetUserIdAsync(string email);
         Task UpdateUser(UserDTO user);
     }

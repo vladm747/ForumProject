@@ -11,6 +11,7 @@ namespace Forum_DAL.Interfaces
     public interface IMessageRepository: IRepository<Message>
     {
         ICollection<Message> GetAll();
+        ICollection<Message> GetByUserIdAsync(string userId);
         Task UpdateAsync(Message entity);
         Task CreateAsync(Message entity, string email);
     }
