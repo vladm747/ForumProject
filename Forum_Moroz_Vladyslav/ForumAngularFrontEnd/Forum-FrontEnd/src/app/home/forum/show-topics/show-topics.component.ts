@@ -44,6 +44,7 @@ export class ShowTopicsComponent implements OnInit {
         this.currentUser = res;
       },
       (err:any) => {
+        this.currentUser = null;
         console.log(err);
       })
     this.showAuthorMap();
@@ -52,7 +53,11 @@ export class ShowTopicsComponent implements OnInit {
   isAdministrator(): boolean {
     this.isAdmin = false;
 
-    if(this.currentUser.roles.includes('admin'))
+    if(this.currentUser==null)
+    {
+      this.isAdmin = false;
+    }
+    else if(this.currentUser.roles.includes('admin'))
     {
       this.isAdmin = true;
     }

@@ -14,6 +14,8 @@ import {Subscription} from 'rxjs';
 export class ShowMessagesComponent implements OnInit {
   userId:string;
   currentUser: any;
+  currentUserId: string;
+
   messageList: Observable<any[]>;
   authorsMap: Map<number, string> = new Map()
   topicId: number | undefined;
@@ -42,8 +44,10 @@ export class ShowMessagesComponent implements OnInit {
     this.service.getCurrentUser().subscribe(
       (res: any) => {
         this.currentUser = res;
+        this.currentUserId = this.currentUser.id;
       },
-      (err:any) => {
+      (err: any) => {
+        this.currentUser = null;
         console.log(err);
       }
       )
@@ -63,8 +67,11 @@ export class ShowMessagesComponent implements OnInit {
 
   isAdministrator(): boolean {
     this.isAdmin = false;
-
-    if(this.currentUser.roles.includes('admin'))
+    if(this.currentUser==null)
+    {
+      this.isAdmin = false;
+    }
+    else if(this.currentUser.roles.includes('admin'))
     {
       this.isAdmin = true;
     }

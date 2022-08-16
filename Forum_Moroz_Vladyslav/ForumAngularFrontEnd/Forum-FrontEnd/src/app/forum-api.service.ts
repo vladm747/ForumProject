@@ -55,7 +55,7 @@ export class ForumApiService {
 
   //User
 
-  getCurrentUser() {
+  getCurrentUser(): any {
     return this.http.get(this.APIurl + '/User/current', {withCredentials: true})
   }
 
