@@ -57,8 +57,9 @@ namespace ForumBLL.Services
             foreach (var item in userList)
             {
                 result.Add(_mapper.Map<User, UserDTO>(item));
+                result.Last().Roles = await _userManager.GetRolesAsync(item);
             }
-            
+         
             return result;
         }
 
