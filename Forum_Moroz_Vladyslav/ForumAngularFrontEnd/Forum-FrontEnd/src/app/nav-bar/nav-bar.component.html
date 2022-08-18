@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a routerLink="/" class="navbar-brand">Home</a>
+  <a routerLink="/" class="navbar-brand m-2">Home</a>
 
   <div class="collapse navbar-collapse" >
     <ul class="navbar-nav mr-auto mb-2 mb-md-0" *ngIf="!authenticated">
@@ -10,9 +10,19 @@
       <li class="nav-item">
         <a routerLink="/register" class="nav-link">Register</a>
       </li>
+
     </ul>
 
-    <ul class="navbar-nav mr-auto mb-2 mb-md-0" *ngIf="authenticated">
+    <!-- <ul class="navbar-nav mr-auto mb-2 mb-md-0 " *ngIf="this.isAdministrator()">
+      <li class="nav-item">
+        <a class="nav-link">Manage Users</a>
+      </li>
+    </ul> -->
+
+    <ul class="navbar-nav mr-auto mb-2 mb-md-0 float-end" *ngIf="authenticated">
+      <li class="nav-item" *ngIf="this.isAdministrator()">
+        <a class="nav-link">Manage Users</a>
+      </li>
       <li class="nav-item">
         <a routerLink="/login" class="nav-link" (click)="logOut()">LogOut</a>
       </li>
