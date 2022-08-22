@@ -32,6 +32,13 @@ namespace Forum.Controllers
         {
             return Ok(_messageService.GetMessageListByTopicIdAsync(topicId));
         }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getMessagesByUserId")]
+        public IActionResult GetMessagesOfUser(string userId)
+        {
+            return Ok(_messageService.GetMessageListByUserIdAsync(userId));
+        }
 
         // GET api/<MessageController>/5
         [HttpGet]

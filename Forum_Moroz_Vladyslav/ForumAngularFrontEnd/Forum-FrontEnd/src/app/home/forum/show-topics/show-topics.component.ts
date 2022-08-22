@@ -16,7 +16,7 @@ export class ShowTopicsComponent implements OnInit {
   topicList: Observable<any[]>;
 
   currentUser: any;
-  topicId: number | undefined;;
+  topicId: number | undefined;
   message: string = '';
   authorsMap: Map<number, string> = new Map()
   userList: any=[];
@@ -38,6 +38,7 @@ export class ShowTopicsComponent implements OnInit {
       switchMap(params => params.getAll('topicId'))
     )
     .subscribe(data=> this.topicId = +data);
+
     this.topicList = this.service.getTopicList();
     this.service.getCurrentUser().subscribe(
       (res: any) => {

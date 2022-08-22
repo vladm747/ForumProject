@@ -18,10 +18,12 @@
         <a class="nav-link">Manage Users</a>
       </li>
     </ul> -->
+    <!-- <ul class="navbar-nav mr-auto mb-2 mb-md-0 float-end" *ngIf="this.isAdmin">
 
+    </ul> -->
     <ul class="navbar-nav mr-auto mb-2 mb-md-0 float-end" *ngIf="authenticated">
       <li class="nav-item" *ngIf="this.isAdministrator()">
-        <a class="nav-link">Manage Users</a>
+        <a routerLink="/manage-users" class="nav-link">Manage Users</a>
       </li>
       <li class="nav-item">
         <a routerLink="/login" class="nav-link" (click)="logOut()">LogOut</a>

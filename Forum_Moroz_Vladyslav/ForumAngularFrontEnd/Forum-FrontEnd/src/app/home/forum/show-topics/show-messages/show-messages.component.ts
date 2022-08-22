@@ -16,9 +16,11 @@ export class ShowMessagesComponent implements OnInit {
   currentUser: any;
   currentUserId: string;
 
+  topicList: any=[];
   messageList: Observable<any[]>;
-  authorsMap: Map<number, string> = new Map()
-  topicId: number | undefined;
+  authorsMap: Map<number, string> = new Map();
+  topicMap: Map<number, string> = new Map();
+  topicId: number;
   titleName: string;
   userList: any=[];
   message: any;
@@ -51,6 +53,7 @@ export class ShowMessagesComponent implements OnInit {
         console.log(err);
       }
       )
+      this.showTopicMap();
       this.showAuthorMap();
     }
 
@@ -61,6 +64,17 @@ export class ShowMessagesComponent implements OnInit {
       for(let i = 0; i < this.userList.length; i++)
       {
         this.authorsMap.set(this.userList[i].id, this.userList[i].firstName);
+      }
+    })
+  }
+
+  showTopicMap() {
+    this.service.getTopicList().subscribe(data => {
+      this.topicList = data;
+
+      for(let i = 0; i < this.topicList.length; i++)
+      {
+        this.topicMap.set(this.topicList[i].id, this.topicList[i].name);
       }
     })
   }

@@ -1,0 +1,25 @@
+<h1 id="title">Messages of {{authorsMap.get(userId)}}</h1>
+<div class="container">
+  <div *ngFor="let item of messageList|async" >
+   <div class="m-2">
+    <mat-card>
+      <mat-card-title>
+        Title: {{item.title}}
+      </mat-card-title>
+
+      <mat-card-content>
+        Content: {{item.content}}
+        <p><small class="text-muted">Topic: {{topicMap.get(item.topicId)}}</small></p>
+      </mat-card-content>
+
+      <mat-card-footer>
+        <div class="m-2">
+          <small class="text-muted">{{authorsMap.get(item.userId)}}</small>
+
+          <small class="text-muted float-end m-b-4 ">{{item.creationDateTime | date:'dd.MM.yyyy h:mm a'}}</small>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+   </div>
+  </div>
+</div>

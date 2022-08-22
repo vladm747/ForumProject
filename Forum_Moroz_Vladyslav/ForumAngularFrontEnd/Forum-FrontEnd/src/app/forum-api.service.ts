@@ -36,7 +36,9 @@ export class ForumApiService {
   getMessagesByTopicId(topicId : number|string|undefined): Observable<any[]> {
     return this.http.get<any>(this.APIurl + `/Message/getMessagesByTopicId?topicId=${topicId}`);
   }
-
+  getMessagesByUserId(userId : number|string|undefined) {
+    return this.http.get(this.APIurl + `/Message/getMessagesByUserId?userId=${userId}`);
+  }
   getMessageById(id: number|string) {
     return this.http.get(this.APIurl + `/Message/${id}`);
   }
@@ -64,7 +66,7 @@ export class ForumApiService {
   }
 
   getAllUsers() {
-    return this.http.get(this.APIurl + '/User/GetAllUsers')
+    return this.http.get(this.APIurl + '/User', {withCredentials: true})
   }
 
   //Role

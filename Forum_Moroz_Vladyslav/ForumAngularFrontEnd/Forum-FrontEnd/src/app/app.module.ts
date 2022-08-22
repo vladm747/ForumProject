@@ -15,6 +15,8 @@ import { ForumApiService } from './forum-api.service';
 import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/show-messages.component';
 import {MatCardModule} from '@angular/material/card';
 import { AddEditMessageComponent } from './home/forum/show-topics/show-messages/add-edit-message/add-edit-message.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UserMessagesComponent } from './manage-users/user-messages/user-messages.component';
 @NgModule({
 
   declarations: [
@@ -27,7 +29,9 @@ import { AddEditMessageComponent } from './home/forum/show-topics/show-messages/
     ShowTopicsComponent,
     AddEditTopicComponent,
     ShowMessagesComponent,
-    AddEditMessageComponent
+    AddEditMessageComponent,
+    ManageUsersComponent,
+    UserMessagesComponent
   ],
   imports: [
     BrowserModule,

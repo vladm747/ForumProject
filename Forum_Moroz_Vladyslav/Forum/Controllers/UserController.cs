@@ -33,7 +33,6 @@ namespace Forum.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             return Ok(await _UoW.UserService.GetAllUsersAsync());

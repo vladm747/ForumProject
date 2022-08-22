@@ -4,12 +4,16 @@ import { ShowMessagesComponent } from './home/forum/show-topics/show-messages/sh
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UserMessagesComponent } from './manage-users/user-messages/user-messages.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'view/:topicId',  component: ShowMessagesComponent}
+  {path: 'manage-users', component: ManageUsersComponent },
+  {path: 'view/:topicId',  component: ShowMessagesComponent},
+  {path: 'manage-users/messages/:userId',  component: UserMessagesComponent}
 ];
 
 @NgModule({
