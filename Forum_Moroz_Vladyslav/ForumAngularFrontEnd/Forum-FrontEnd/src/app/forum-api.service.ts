@@ -57,6 +57,10 @@ export class ForumApiService {
 
   //User
 
+  deleteUser(email: string) {
+    return this.http.delete(this.APIurl + `/User/DeleteUser/${email}`, {withCredentials: true})
+  }
+
   getCurrentUser(): any {
     return this.http.get(this.APIurl + '/User/current', {withCredentials: true})
   }

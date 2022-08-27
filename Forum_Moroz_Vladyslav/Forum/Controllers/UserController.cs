@@ -23,7 +23,7 @@ namespace Forum.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteUser/{email}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(string email)
