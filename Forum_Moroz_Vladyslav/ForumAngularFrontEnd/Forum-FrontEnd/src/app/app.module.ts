@@ -17,6 +17,7 @@ import {MatCardModule} from '@angular/material/card';
 import { AddEditMessageComponent } from './home/forum/show-topics/show-messages/add-edit-message/add-edit-message.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { UserMessagesComponent } from './manage-users/user-messages/user-messages.component';
+import { UserProfileComponent } from './manage-users/user-profile/user-profile.component';
 @NgModule({
 
   declarations: [
@@ -31,7 +32,8 @@ import { UserMessagesComponent } from './manage-users/user-messages/user-message
     ShowMessagesComponent,
     AddEditMessageComponent,
     ManageUsersComponent,
-    UserMessagesComponent
+    UserMessagesComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

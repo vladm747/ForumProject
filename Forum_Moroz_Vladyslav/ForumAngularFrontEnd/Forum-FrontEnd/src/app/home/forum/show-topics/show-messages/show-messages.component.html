@@ -39,7 +39,7 @@
 
       <mat-card-footer>
         <div class="m-2">
-          <small class="text-muted">{{authorsMap.get(item.userId)}}</small>
+          <a class="link-primary" [routerLink]="['view', 'userId']" [queryParams]="{'userId': item.userId}"><small class="text-muted">{{authorsMap.get(item.userId)}}</small></a>
           <small class="text-muted float-end m-b-4 ">{{item.creationDateTime | date:'dd.MM.yyyy h:mm a'}}</small>
         </div>
       </mat-card-footer>

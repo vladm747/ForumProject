@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { ForumApiService } from 'src/app/forum-api.service';
 import { ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
@@ -43,6 +43,9 @@ export class ShowMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageList = this.service.getMessagesByTopicId(this.topicId);
+    this.activateRoute.paramMap.pipe(
+      switchMap(params => params.getAll('userId'))
+    ).subscribe(data=> this.userId = data);
     this.service.getCurrentUser().subscribe(
       (res: any) => {
         this.currentUser = res;

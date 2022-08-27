@@ -1,0 +1,44 @@
+<section class="bg-light">
+
+  <div class="container">
+
+      <div class="row">
+          <div class="col-lg-12 mb-4 mb-sm-5">
+
+              <div class="card card-style1 border-0">
+                  <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                    <h1>User Profile</h1>
+                      <div class="row align-items-center">
+                        <div class="col-lg-6 px-xl-10">
+                              <div class=" d-lg-inline-block ">
+                                  <h3 class="h2  mb-2"> {{this.user.firstName}}  {{this.user.lastName}}</h3>
+                              </div>
+                              <ul class="list-unstyled mb-1-9">
+                                  <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Roles:</span> {{this.user.roles}}</li>
+                                  <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Quantity of Messages:</span> {{this.user.messages.length}}</li>
+                                  <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> {{this.user.email}}</li>
+                              </ul>
+                          </div>
+                          <div *ngFor="let item of this.userMessages|async" >
+                            <div class="container mb-1">
+                             <mat-card>
+                               <mat-card-title>
+                                 {{item.title}}
+                               </mat-card-title>
+
+                               <mat-card-content>
+                                  {{item.content}}
+                                 <p><small class="text-muted"> {{topicMap.get(item.topicId)}}</small></p>
+                                 <p><small class="text-muted float-end m-b-4 ">{{item.creationDateTime | date:'dd.MM.yyyy h:mm a'}}</small></p>
+                                </mat-card-content>
+
+                             </mat-card>
+                            </div>
+                           </div>
+                      </div>
+                    </div>
+                </div>
+           </div>
+      </div>
+  </div>
+</section>
